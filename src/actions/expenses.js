@@ -35,7 +35,7 @@ export const removeExpense = ({ id } = {}) => ({
 
 export const startRemoveExpense = ({ id } = {}) => {
   return (dispatch) => {
-    database.ref(`expenses/${id}`).remove().then(() => {
+    return database.ref(`expenses/${id}`).remove().then(() => {
       dispatch(removeExpense({ id}));
     });
   };
@@ -47,6 +47,16 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+// This function first edits the expense in the database, and then once, that works, it dispatches the change to firebase.
+export const startEditExpense = (id, updates) => {
+  return (dispatch) => {
+    // Remember to add return If you don't add return, then you will not be able to do something after startEditExpense completes inside the test case
+    database.ref(`expenses/${id}`).update(updates).then(() => {
+      dispatch(editExpense(id, updates));
+    });
+  };
+};
 
 // SET_EXPENSES
 export const setExpenses = (expenses) => ({
