@@ -32,6 +32,15 @@ export const removeExpense = ({ id } = {}) => ({
   id
 });
 
+
+export const startRemoveExpense = ({ id } = {}) => {
+  return (dispatch) => {
+    database.ref(`expenses/${id}`).remove().then(() => {
+      dispatch(removeExpense({ id}));
+    });
+  };
+};
+
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
   type: 'EDIT_EXPENSE',
@@ -47,9 +56,7 @@ export const setExpenses = (expenses) => ({
 
 export const startSetExpenses = () => {
   return (dispatch) => {
-    // fetch the data
     return database.ref('expenses').once('value').then((snapshot) => {
-      // parse the data
       const expenses = [];
       snapshot.forEach((childSnapshot) => {
         expenses.push({
@@ -57,7 +64,6 @@ export const startSetExpenses = () => {
           ...childSnapshot.val()
         });
       });
-      // dispatch the data to the redux store
       dispatch(setExpenses(expenses));
     });
   };
