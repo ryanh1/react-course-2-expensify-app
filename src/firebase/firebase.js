@@ -1,4 +1,3 @@
-// Take all of the named exports from firebase, and dump them on a new variable called firebase.
 import * as firebase from 'firebase';
 
 var config = {
@@ -13,4 +12,6 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
-export { firebase, database as default };
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+export { firebase, googleAuthProvider, database as default };

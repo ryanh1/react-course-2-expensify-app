@@ -48,10 +48,8 @@ export const editExpense = (id, updates) => ({
   updates
 });
 
-// This function first edits the expense in the database, and then once, that works, it dispatches the change to firebase.
 export const startEditExpense = (id, updates) => {
   return (dispatch) => {
-    // Remember to add return If you don't add return, then you will not be able to do something after startEditExpense completes inside the test case
     database.ref(`expenses/${id}`).update(updates).then(() => {
       dispatch(editExpense(id, updates));
     });
