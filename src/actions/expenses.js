@@ -9,8 +9,6 @@ export const addExpense = (expense) => ({
 });
 
 export const startAddExpense = (expenseData = {}) => {
-  // When we use async actions, we use dispatch to send data to firebase.  We start by putting dispatch in the arguments area and then calling it down below.
-  // We can use the same process with getState.  getState gets put in the arguments list and is called down below to find the state at that moment in time.  It enables us to find the id of the user that is logged in.
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
     const {
@@ -20,7 +18,6 @@ export const startAddExpense = (expenseData = {}) => {
       createdAt = 0
     } = expenseData;
     const expense = { description, note, amount, createdAt}
-    // Here we can add in the user id into the database.
     database.ref(`users/${uid}/expenses`).push(expense).then((ref) => {
       dispatch(addExpense({
         id: ref.key,
@@ -70,7 +67,6 @@ export const setExpenses = (expenses) => ({
 
 export const startSetExpenses = () => {
   return (dispatch, getState) => {
-    // These 2 lines updated too
     const uid = getState().auth.uid;
     return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
       const expenses = [];
