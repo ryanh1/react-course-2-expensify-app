@@ -1,19 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
 
 body {
+  color: $dark-grey;
   background: white;
   font-family: Helvetica, Arial, sans-serif;
+  line-height: 1.6;
 }
 
 button {
-  // This turns the cursor into the little hand when hovered over the button
   cursor: pointer;
 }
 
 button:disabled {
-  // This sets the cursor to default when we are hovered over a disabled button
   cursor: default;
 }
 
